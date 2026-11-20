@@ -1,0 +1,42 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+    function memberPath() {
+      return /databases/$(database)/documents/businesses/ga-singhania-computers/members/$(request.auth.uid);
+    }
+    function isBusinessMember() {
+      return request.auth != null && exists(memberPath()) && get(memberPath()).data.active == true;
+    }
+    function isBusinessAdmin() {
+      return isBusinessMember() && get(memberPath()).data.role == 'admin';
+    }
+
+    // Only the explicitly supplied first-admin UID may create its own initial admin membership.
+    match /businesses/ga-singhania-computers/members/9avJMZBhEsWL5N2fNaKVGrbpazJ2 {
+      allow get: if request.auth != null && request.auth.uid == '9avJMZBhEsWL5N2fNaKVGrbpazJ2';
+      allow create: if request.auth != null
+        && request.auth.uid == '9avJMZBhEsWL5N2fNaKVGrbpazJ2'
+        && request.resource.data.active == true
+        && request.resource.data.role == 'admin'
+        && request.resource.data.keys().hasOnly(['active', 'role', 'email', 'createdAt']);
+      allow update, delete, list: if false;
+    }
+
+    match /businesses/ga-singhania-computers/members/{userId} {
+      allow get: if request.auth != null && request.auth.uid == userId;
+      allow list, create, update, delete: if false;
+    }
+
+    match /businesses/{businessId}/{collectionName}/{recordId} {
+      allow read: if businessId == 'ga-singhania-computers'
+        && collectionName in ['products', 'parties', 'invoices', 'payments', 'expenses', 'movements', 'settings']
+        && isBusinessMember();
+      allow create, update: if businessId == 'ga-singhania-computers'
+        && collectionName in ['products', 'parties', 'invoices', 'payments', 'expenses', 'movements', 'settings']
+        && isBusinessMember();
+      allow delete: if businessId == 'ga-singhania-computers'
+        && collectionName in ['products', 'parties', 'invoices', 'payments', 'expenses', 'movements', 'settings']
+        && isBusinessAdmin();
+    }
+  }
+}

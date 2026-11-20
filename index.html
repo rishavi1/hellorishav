@@ -1,0 +1,36 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="theme-color" content="#155eef"><title>GA Singhania Computers | Business Desk</title>
+<link rel="manifest" href="manifest.webmanifest"><link rel="stylesheet" href="styles.css">
+</head>
+<body>
+<div class="app-shell">
+<aside class="sidebar" id="sidebar">
+  <div class="brand"><div class="brand-mark">GA</div><div><b>GA SINGHANIA</b><small>COMPUTERS · BUSINESS DESK</small></div></div>
+  <nav id="nav">
+    <button class="nav-item active" data-page="dashboard">▦ <span>Dashboard</span></button>
+    <button class="nav-item" data-page="billing">▤ <span>New Bill</span></button>
+    <button class="nav-item" data-page="invoices">▧ <span>Invoices</span></button>
+    <button class="nav-item" data-page="products">▣ <span>Inventory</span></button>
+    <button class="nav-item" data-page="parties">♙ <span>Parties & Ledger</span></button>
+    <button class="nav-item" data-page="cashbook">₹ <span>Cashbook</span></button>
+    <button class="nav-item" data-page="expenses">↘ <span>Expenses</span></button>
+    <button class="nav-item" data-page="reports">▥ <span>Reports</span></button>
+    <button class="nav-item" data-page="settings">⚙ <span>Settings & Backup</span></button>
+  </nav>
+  <div class="sidebar-foot"><span class="offline-dot"></span> Offline database active<small>Data stays in this browser</small></div>
+</aside>
+<main class="main">
+<header class="topbar"><button class="icon-btn mobile-menu" id="menuBtn">☰</button><div><div class="eyebrow">WHOLESALE MANAGEMENT</div><h1 id="pageTitle">Dashboard</h1></div><div class="top-actions"><span class="local-pill">● Local mode</span><button class="btn btn-light" id="quickBackup">Backup now</button></div></header>
+<div class="content" id="appContent"></div>
+</main>
+</div>
+<div class="mobile-nav" id="mobileNav">
+<button data-page="dashboard" class="active">▦<small>Home</small></button><button data-page="billing">▤<small>Bill</small></button><button data-page="products">▣<small>Stock</small></button><button data-page="parties">♙<small>Parties</small></button><button data-page="cashbook">₹<small>Cashbook</small></button><button data-page="expenses">↘<small>Expenses</small></button>
+</div>
+<div class="toast" id="toast"></div>
+<dialog id="modal"><div class="modal-head"><h2 id="modalTitle">Add</h2><button class="icon-btn" id="closeModal">✕</button></div><div id="modalBody"></div></dialog>
+<script src="app.js"></script>
+</body></html>
